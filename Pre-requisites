@@ -1,0 +1,24 @@
+Project: Stocker – A Cloud Based Stock Trading Application using Flask and AWS
+
+Before starting the development of the Stocker application, all required tools, services, and resources were successfully configured. These prerequisites ensure that the system can be developed, deployed, and managed efficiently using cloud infrastructure.
+
+1. AWS Account Setup
+An Amazon Web Services (AWS) account was created and configured to access cloud services required for the project. This account enables the use of services such as EC2, DynamoDB, and SNS for hosting, database management, and notifications.
+
+2. AWS IAM (Identity and Access Management)
+AWS IAM was configured to manage secure access to AWS resources. Appropriate users, roles, and permissions were set up to ensure controlled and secure interaction with AWS services during the development and deployment process.
+
+3. AWS EC2 (Elastic Compute Cloud)
+Amazon EC2 was prepared to host the Flask-based web application. This virtual server environment allows scalable deployment of the backend application and ensures reliable cloud-based execution.
+
+4. AWS DynamoDB
+Amazon DynamoDB was configured as the NoSQL database service to store application data such as users, stocks, portfolios, and transaction records. DynamoDB provides high availability, scalability, and fast performance for cloud-based applications.
+
+5. Amazon SNS (Simple Notification Service)
+Amazon SNS was set up to enable notification services within the system. This service can be used to send alerts or updates related to stock transactions or system events.
+
+6. Git Version Control
+Git was installed and configured to manage source code versions. It enables tracking of changes, collaboration, and maintaining a structured development workflow throughout the project.
+
+7. Visual Studio Code Installation
+Visual Studio Code was installed as the primary development environment. It was configured with necessary extensions for Python, Flask development, and AWS integration to support efficient coding and debugging.
