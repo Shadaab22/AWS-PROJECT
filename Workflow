@@ -1,0 +1,84 @@
+Workflow of the Project
+
+Stocker – A Cloud Based Stock Trading Application using Flask and AWS
+
+The development and deployment of the Stocker platform follow a structured workflow that integrates backend development, cloud services configuration, and deployment on AWS infrastructure. The workflow ensures secure user interaction, efficient trade processing, and reliable data management.
+
+1. Backend Development and Application Setup
+The first step in building the Stocker platform involves developing the backend application using the Flask framework. Flask serves as the core component responsible for handling application logic, API routing, and communication between the frontend interface and cloud services.
+The backend integrates with AWS services using the boto3 Python SDK, which allows the application to interact with DynamoDB for data storage and SNS for notifications. This setup ensures seamless communication between the application and the cloud environment.
+
+Key activities include:
+->Creating the Flask project structure
+->Implementing backend routes for authentication, trading, and portfolio management
+->Integrating AWS services using boto3
+->Preparing the application for cloud deployment
+
+2. AWS Account Setup and Login
+To utilize cloud resources, an AWS account must be configured. After creating the account, the developer logs into the AWS Management Console, which provides access to various services required for the application.
+This step establishes the cloud environment that will host the application and manage its services.
+
+Key activities include:
+->Creating an AWS account if not already available
+->Accessing the AWS Management Console
+->Preparing the environment for service configuration.
+
+3. DynamoDB Database Creation and Setup
+The Stocker application requires a scalable and high-performance database to manage user data and trading activities. Amazon DynamoDB is used as the serverless NoSQL database.
+Several tables are created to store essential data such as user profiles, stock information, portfolio holdings, and transaction history. DynamoDB ensures fast and reliable access to this information.
+
+Key tables created include:
+->Users table for user profiles and authentication data
+->Stocks table for stock details and market information
+->Transactions table for buy and sell records
+->Portfolio table for tracking user holdings.
+These tables are structured with appropriate keys such as UserID, StockID, and TransactionID to ensure efficient data retrieval.
+
+4. SNS Notification Setup
+The application includes a notification system using Amazon Simple Notification Service (SNS). SNS allows the platform to send alerts and updates to users when important events occur.
+For example, users can receive notifications when trades are executed or when account-related activities take place.
+
+Key activities include:
+->Creating SNS topics for trading and user notifications
+->Configuring email subscriptions for notifications
+->Integrating the SNS service with the Flask backend.
+
+5. IAM Role Setup
+Security and access control are managed using AWS Identity and Access Management (IAM). IAM roles ensure that only authorized services and applications can interact with AWS resources.
+An IAM role is created and attached to the EC2 instance so that the Flask application can securely access DynamoDB and SNS without exposing credentials.
+
+Key activities include:
+->Creating IAM roles for application access
+->Attaching required policies for DynamoDB and SNS
+->Assigning roles to EC2 instances for secure resource access.
+
+6. EC2 Instance Setup
+The Stocker application is hosted on Amazon Elastic Compute Cloud (EC2). EC2 provides a virtual server environment where the Flask application can run continuously.
+During this stage, a virtual machine instance is launched and configured with the necessary software environment for Python and Flask.
+
+Key activities include:
+->Launching an EC2 instance.
+->Installing Python and required dependencies.
+->Configuring security groups for HTTP and SSH access.
+->Preparing the server environment for application deployment.
+
+7. Deployment on EC2
+Once the EC2 environment is ready, the Flask application is deployed to the server. The application files are uploaded to the EC2 instance, and the Flask server is started to handle incoming requests.
+The system is then connected to DynamoDB and SNS services to enable database operations and notification handling.
+
+Key activities include:
+->Uploading project files to EC2
+->Installing project dependencies
+->Running the Flask application
+->Ensuring communication with AWS services.
+
+8. Testing and Validation
+After deployment, the system undergoes testing to verify that all functionalities operate correctly. Functional testing ensures that users can successfully interact with the application.
+
+Testing activities include:
+->Verifying user registration and login functionality
+->Testing stock buy and sell operations
+->Confirming portfolio updates after trades
+->Ensuring transaction history is recorded correctly
+->Validating SNS notifications for important events.
+Successful testing confirms that the Stocker platform is functioning as intended and ready for real-world usage.
