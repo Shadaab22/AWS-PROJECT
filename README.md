@@ -8,9 +8,13 @@ The backend of the application is built using Flask, which handles routing, auth
 For hosting the application, I deployed the backend on an AWS EC2 instance. This allows the application to run on a cloud server instead of a local machine, making it more scalable and closer to how real-world web applications are deployed.
 
 To manage the application data, I used Amazon DynamoDB, which is a NoSQL database provided by AWS. DynamoDB stores important information such as:
+
 ->user account details
+
 ->stock information
+
 ->transaction records
+
 ->user portfolio holdings
 
 Using DynamoDB allowed me to store and retrieve data quickly without managing a traditional database server.
@@ -22,12 +26,19 @@ Security and resource access are managed using AWS IAM (Identity and Access Mana
 On the frontend side, I created a simple interface using HTML and CSS where users can register, log in, execute trades, and view their portfolio information. The interface communicates with the Flask backend to fetch and display data dynamically.
 
 Through this project, I implemented several key features including:
+
 ->user registration and secure login system
+
 ->stock buy and sell transaction functionality
+
 ->portfolio tracking for each user
+
 ->transaction history management
+
 ->cloud database integration using DynamoDB
+
 ->deployment of the application on AWS EC2
+
 ->notification integration using AWS SNS
 
 Building this project helped me understand how backend development, cloud services, and database systems work together to create scalable web applications. It also gave me hands-on experience with deploying applications on AWS and integrating multiple cloud services into a single system.
