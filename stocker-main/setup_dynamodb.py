@@ -4,23 +4,8 @@ import os
 from decimal import Decimal
 from datetime import datetime, date
 
-# AWS Configuration
-# For local development
-AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_REGION = os.environ.get('AWS_REGION', 'us-east-1')
-
 # Set up boto3 session
-if AWS_ACCESS_KEY and AWS_SECRET_KEY:
-    # Local development with explicit credentials
-    session = boto3.Session(
-        aws_access_key_id=AWS_ACCESS_KEY,
-        aws_secret_access_key=AWS_SECRET_KEY,
-        region_name=AWS_REGION
-    )
-else:
-    # EC2 instance with IAM role
-    session = boto3.Session(region_name=AWS_REGION)
+session = boto3.Session(region_name="us-east-1")
 
 # Create DynamoDB resource and client
 dynamodb = session.resource('dynamodb')
