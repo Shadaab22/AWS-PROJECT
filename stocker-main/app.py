@@ -493,8 +493,8 @@ def buy_stock(stock_id):
 
     if request.method == "POST":
 
-        quantity = int(request.form["quantity"])
-        price = float(stock["price"])
+        quantity = Decimal(request.form["quantity"])
+        price = Decimal(str(stock["price"]))
         user_id = session["user_id"]
 
         create_transaction(
@@ -543,7 +543,7 @@ def sell_stock(stock_id):
 
     if request.method == "POST":
 
-        quantity = int(request.form["quantity"])
+        quantity = Decimal(request.form["quantity"])
 
         if quantity > portfolio_entry["quantity"]:
             flash("Not enough shares to sell")
