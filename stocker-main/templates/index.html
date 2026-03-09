@@ -38,10 +38,10 @@
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      {% if session.get('user') %}
+      {% if session.get('email') %}
         <a class="btn-getstarted" href="{{ url_for('logout') }}">Logout</a>
       {% else %}
-        <a class="btn-getstarted" href="{{ url_for('login') }}">Login/Signup</a>
+        <a class="btn-getstarted" href="{{ url_for('login') }}">Login / Signup</a>
       {% endif %}
     </div>
   </header>
@@ -95,7 +95,7 @@
               <div class="icon">
                 <i class="bi bi-activity"></i>
               </div>
-              <a class="stretched-link" href="{{ url_for('login') }}"></a>
+              <a class="stretched-link" href="{{ url_for('login') }}">
                 <h3>Secure user authentication</h3>
               </a>
               <p style="color: #000000">Protect your trading account with advanced security features.</p>
@@ -106,7 +106,7 @@
               <div class="icon">
                 <i class="bi bi-broadcast"></i>
               </div>
-              <a class="stretched-link" href="{{ url_for('login') }}"></a>
+              <a class="stretched-link" href="{{ url_for('login') }}">
                 <h3>Real-time trade execution</h3>
               </a>
               <p style="color: #000000">Experience lightning-fast trade execution for optimal market opportunities.</p>
@@ -118,7 +118,7 @@
               <div class="icon">
                 <i class="bi bi-easel"></i>
               </div>
-              <a class="stretched-link" href="{{ url_for('login') }}"></a>
+              <a class="stretched-link" href="{{ url_for('login') }}">
                 <h3>Portfolio tracking</h3>
               </a>
               <p style="color: #000000">Monitor your investments effortlessly with our portfolio tracking tool.</p>
@@ -133,7 +133,7 @@
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-4 col-md-6 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="{{ url_for('index') }}" class="logo d-flex align-items-center">
               <span class="sitename">Stocker</span>
             </a>
             <div class="footer-contact pt-3">

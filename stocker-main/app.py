@@ -399,6 +399,183 @@ def dashboard_trader():
         market_data=stocks
     )
 
+@app.route('/service01')
+def service01():
+
+    if "role" not in session or session["role"] != "admin":
+        return redirect(url_for("login"))
+
+    traders = get_traders()
+
+    return render_template(
+        "service-details-1.html",
+        traders=traders
+    )
+
+@app.route('/service02')
+def service02():
+
+    if "role" not in session or session["role"] != "admin":
+        return redirect(url_for("login"))
+
+    transactions = get_transactions()
+
+    return render_template(
+        "service-details-2.html",
+        transactions=transactions
+    )
+
+
+@app.route('/service03')
+def service03():
+
+    if "role" not in session or session["role"] != "admin":
+        return redirect(url_for("login"))
+
+    portfolios = get_portfolios()
+
+    total_portfolio_value = sum(
+        p["stock"]["price"] * p["quantity"] for p in portfolios
+    )
+
+    return render_template(
+        "service-details-3.html",
+        portfolios=portfolios,
+        total_portfolio_value=total_portfolio_value
+    )
+
+@app.route('/service04')
+def service04():
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    stocks = get_all_stocks()
+
+    user = get_user_by_email(session["email"])
+
+    return render_template(
+        "service-details-4.html",
+        market_data=stocks,
+        user=user
+    )
+
+@app.route('/service05')
+def service05():
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    portfolio = get_user_portfolio(session["user_id"])
+    transactions = [
+        t for t in get_transactions()
+        if t["user_id"] == session["user_id"]
+    ]
+
+    total_value = sum(
+        item["quantity"] * item["stock"]["price"] for item in portfolio
+    )
+
+    return render_template(
+        "service-details-5.html",
+        portfolio=portfolio,
+        transactions=transactions,
+        total_value=total_value
+    )
+
+@app.route('/buy_stock/<stock_id>', methods=["GET","POST"])
+def buy_stock(stock_id):
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    stock = get_stock_by_id(stock_id)
+
+    if request.method == "POST":
+
+        quantity = int(request.form["quantity"])
+        price = float(stock["price"])
+        user_id = session["user_id"]
+
+        create_transaction(
+            user_id,
+            stock_id,
+            "buy",
+            quantity,
+            price
+        )
+
+        portfolio_item = get_portfolio_item(user_id, stock_id)
+
+        if portfolio_item:
+            new_quantity = int(portfolio_item["quantity"]) + quantity
+            avg_price = (
+                (portfolio_item["average_price"] * portfolio_item["quantity"])
+                + (price * quantity)
+            ) / new_quantity
+        else:
+            new_quantity = quantity
+            avg_price = price
+
+        update_portfolio(user_id, stock_id, new_quantity, avg_price)
+
+        flash("Stock purchased successfully")
+
+        return redirect(url_for("dashboard_trader"))
+
+    return render_template("buy_stock.html", stock=stock)
+
+@app.route('/sell_stock/<stock_id>', methods=["GET","POST"])
+def sell_stock(stock_id):
+
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
+    user_id = session["user_id"]
+
+    stock = get_stock_by_id(stock_id)
+
+    portfolio_entry = get_portfolio_item(user_id, stock_id)
+
+    if not portfolio_entry:
+        flash("You don't own this stock")
+        return redirect(url_for("dashboard_trader"))
+
+    if request.method == "POST":
+
+        quantity = int(request.form["quantity"])
+
+        if quantity > portfolio_entry["quantity"]:
+            flash("Not enough shares to sell")
+            return redirect(url_for("dashboard_trader"))
+
+        create_transaction(
+            user_id,
+            stock_id,
+            "sell",
+            quantity,
+            stock["price"]
+        )
+
+        new_quantity = portfolio_entry["quantity"] - quantity
+
+        update_portfolio(
+            user_id,
+            stock_id,
+            new_quantity,
+            portfolio_entry["average_price"]
+        )
+
+        flash("Stock sold successfully")
+
+        return redirect(url_for("dashboard_trader"))
+
+    return render_template(
+        "sell_stock.html",
+        stock=stock,
+        portfolio_entry=portfolio_entry
+    )
+
 
 @app.route('/logout')
 def logout():
@@ -411,7 +588,5 @@ def logout():
 # ================= RUN =================
 
 if __name__ == "__main__":
-    for rule in app.url_map.iter_rules():
-        print(rule.endpoint, rule)
 
     app.run(debug=True, host="0.0.0.0", port=5000)
